@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace Algoritmo_di_dijkstraa
+namespace ALGORITMO_DI_DIJSTRA
 {
     internal class Program
     {
         class Dijkstra
         {
+
             public static void EseguiDijkstra(int[,] grafo, int numeroNodi)
             {
                 int[] distanza = new int[numeroNodi];
@@ -30,6 +31,7 @@ namespace Algoritmo_di_dijkstraa
                         if (!visitato[v] && grafo[u, v] > 0)
                         {
                             int nuovaDistanza = distanza[u] + grafo[u, v];
+
                             if (nuovaDistanza < distanza[v])
                             {
                                 distanza[v] = nuovaDistanza;
@@ -39,10 +41,7 @@ namespace Algoritmo_di_dijkstraa
                     }
                 }
 
-                Console.WriteLine("\n");
-                Console.WriteLine("\n");
-                Console.WriteLine("\n");
-                Console.WriteLine("Distanze minime dal nodo iniziale:");
+                Console.WriteLine("\nDistanze minime dal nodo iniziale:");
                 for (int i = 0; i < numeroNodi; i++)
                 {
                     Console.WriteLine($"{(char)(65 + i)}: {distanza[i]}");
@@ -88,9 +87,11 @@ namespace Algoritmo_di_dijkstraa
                     Console.Write($"{matrice[i, j]} \t");
                 }
             }
+
             Dijkstra.EseguiDijkstra(matrice, numeroNodi);
             Console.ReadKey();
         }
+
         static int[,] GeneratoreMatrice(int righe, int colonne)
         {
             Random rnd = new Random();
@@ -99,14 +100,26 @@ namespace Algoritmo_di_dijkstraa
             {
                 for (int j = 0; j < colonne; j++)
                 {
-                    do
+                    int n = rnd.Next(-1, 9);
+                    while (n == 0 && i != j)
                     {
-                        matrice[i, j] = rnd.Next(-1, 9);
+                        n = rnd.Next(-1, 9);
                     }
-                    while (matrice[i, j] == 0);
+                    if (i == j)
+                    {
+                        matrice[i, i] = 0;
+                    }
+                    else
+                    {
+                        matrice[i, j] = n;
+                        matrice[j, i] = n;
+                    }
                 }
+
+
                 matrice[i, i] = 0;
             }
+
             return matrice;
         }
     }
